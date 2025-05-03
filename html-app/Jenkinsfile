@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Construir imagen Docker') {
             steps {
-                sh 'docker build -t html-test .'
+                sh 'docker build -t html-test html-app/'
             }
         }
         stage('Ejecutar contenedor') {
