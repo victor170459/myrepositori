@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    stages {
+        stage('Construir imagen Docker') {
+            steps {
+                sh 'docker build -t html-test .'
+            }
+        }
+        stage('Ejecutar contenedor') {
+            steps {
+                // Detener y eliminar el contenedor si ya existe
+                sh 'docker rm -f html-test || true'
+                sh 'docker run -d --rm -p 8081:80 --name html-test html-test'
+            }
+        }
+    }
+}

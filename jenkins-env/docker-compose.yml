@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  jenkins:
+    build: ./  # Usa el Dockerfile de jenkins-env para instalar Docker dentro de Jenkins
+    container_name: jenkins
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ../html-app:/var/jenkins_home/workspace/page  # 👈 Montamos tu proyecto HTML directamente en el workspace del job
+    networks:
+      - jenkins-net
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
+
+networks:
+  jenkins-net:
+    driver: bridge
